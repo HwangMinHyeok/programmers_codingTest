@@ -36,7 +36,7 @@ function solution(dartResult) {
       // num: 0~9
       val = Math.pow(Number(el[0]), expObj[el[1]]);
     }
-    // calculate options
+    // option handling
     if (el[el.length - 1] === "*") {
       if (result.length != 0) {
         result[idx - 1] *= 2;

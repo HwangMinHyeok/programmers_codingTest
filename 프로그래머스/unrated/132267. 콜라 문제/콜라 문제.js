@@ -1,5 +1,5 @@
 // a병 갖다주고, b병을 받는다
-// stage    total
+// stage    totalBottles
 // 0        n
 // 1        n - (n/a)*a + (n/a)*b
 function solution(a, b, n) {

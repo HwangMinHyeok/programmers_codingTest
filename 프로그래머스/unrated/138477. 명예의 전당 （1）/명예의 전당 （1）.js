@@ -7,7 +7,6 @@ function solution(k, scores) {
     if (honoredList.length <= k) {
       result.push(honoredList[honoredList.length - 1]);
     } else {
-      honoredList.splice(k);
       result.push(honoredList[k - 1]);
     }
   }

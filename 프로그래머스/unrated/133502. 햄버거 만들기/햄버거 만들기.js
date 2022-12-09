@@ -24,17 +24,19 @@
 // 2
 // stack에 push하면서 check
 function solution(ingredients) {
-    const burger = [1, 2, 3, 1];
-    let burgerCnt = 0;
-    const ingStack = [];
-    for (const ingredient of ingredients) {
-        ingStack.push(ingredient);
-        if (ingStack.length >= 4) {
-            if (ingStack.slice(-4).every((el, idx) => el === burger[idx])) {
-                burgerCnt++;
-                ingStack.splice(-4);
-            }
-        }
+  const burger = [1, 2, 3, 1];
+  let burgerCnt = 0;
+  const ingStack = [];
+  for (const ingredient of ingredients) {
+    ingStack.push(ingredient);
+    if (ingStack.length >= burger.length) {
+      if (
+        ingStack.slice(-burger.length).every((el, idx) => el === burger[idx])
+      ) {
+        burgerCnt++;
+        for (let i = 0; i < burger.length; i++) ingStack.pop();
+      }
     }
-    return burgerCnt;
+  }
+  return burgerCnt;
 }

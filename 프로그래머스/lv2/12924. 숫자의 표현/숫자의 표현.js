@@ -15,11 +15,11 @@ function solution(n) {
         let eachSum = n / d;
         // d odd
         if (d % 2 === 1) {
-            if (eachSum - Math.floor(d / 2) < 1) cnt++;
+            if (eachSum - Math.floor(d / 2) >= 1) cnt++;
         }
         // eachSum odd
         if (eachSum % 2 === 1) {
-            if (Math.ceil(eachSum / 2 - d) < 1) cnt++;
+            if (Math.ceil(eachSum / 2 - d) >= 1) cnt++;
         }
     });
     return cnt;

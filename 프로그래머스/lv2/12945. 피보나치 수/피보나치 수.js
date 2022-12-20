@@ -1,7 +1,7 @@
-function solution(n) {
+function solution(num) {
   const fib = [0n, 1n];
-  for (let i = 2; i <= n; i++) {
-    fib.push(fib[fib.length - 1] + fib[fib.length - 2]);
+  for (let i = 2; i <= num; i++) {
+    fib.push(fib.at(-1) + fib.at(-2));
   }
-  return fib[n] % 1234567n;
+  return Number(fib[num] % 1234567n);
 }

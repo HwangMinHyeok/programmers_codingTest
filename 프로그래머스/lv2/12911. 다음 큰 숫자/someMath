@@ -1,0 +1,46 @@
+// 1 느낌없는 하드코딩
+// function solution(n) {
+//     const oneCnt = getOneCntFromBinary(n);
+//     for (let i = n + 1; i <= 1000001; i++) {
+//         if (oneCnt === getOneCntFromBinary(i)) return i;
+//     }
+// }
+
+// function getOneCntFromBinary(n) {
+//     const bin = n.toString(2)
+//     return bin.match(/1/g).length;
+// }
+
+// 2 수학
+// adder: n의 가장 마지막 1만 1로 갖고 나머지는 0으로 가지는 수
+// ex) n: 10101011     ex2) n:1101011101000
+// adder: 00000001      adder:0000000001000
+
+// adder를 n에 더하는 이유
+// adder미만의 숫자를 n에 더하면 n보다 큰 수 조건은 만족하지만,
+// 절대 n과 1의 개수가 같을 수 없다
+// 왜냐면: adder의 1의 위치를 k라 할 때, k-1~0자리에는 2진수 n이 0을 값으로 갖기 때문
+// -> n+adder는 n보다 큰 수이면서, n과 1의 개수가 //! 같을 수 있는 가장 작은 수
+
+// added = n + adder
+// oneCntDif = 1의 개수 차이
+// if OneCntDif === 0 (n의 1의 개수와 added의 1의 개수가 같다면) ->//! return added
+// if OneCntDif !== 0 (n의 1의 개수와 added의 1의 개수가 다르다면) ->
+
+// 2진수 1..1 (1만 k개, 0은 없음)는 10진수 2^k-1과 같다
+// ex) 111(2) = 7(10) = 2^3-1(10)
+// ex2) 11111(2) = 31(10) = 2^5-1(10)
+
+// oneCntDif 값만큼 1을 added의 맨 뒤에 넣어줘야 함
+// -> //! return added + (2^oneCntDif - 1)
+function solution(n) {
+    const bin = n.toString(2);
+    const oneCnt = bin.match(/1/g).length;
+    const lastOneIdx = bin.lastIndexOf('1');
+    const adder = Math.pow(2, (bin.length - 1) - lastOneIdx);
+    const added = n + adder;
+    const added_oneCnt = added.toString(2).match(/1/g).length;
+    const oneCntDif = oneCnt - added_oneCnt;
+    if (oneCntDif === 0) return added;
+    return added + (Math.pow(2, oneCntDif) - 1);
+}

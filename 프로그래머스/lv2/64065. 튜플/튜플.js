@@ -1,55 +1,18 @@
-// convert str to arr
-function splitS(s) {
+// 입력 string -> array
+function convertToArray(s) {
   return s
     .slice(2, s.length - 2)
     .split("},{")
-    .map((str) => str.split(",").map((strNum) => Number(strNum)));
+    .map(str => str.split(",").map((strNum) => Number(strNum)));
 }
+// 길이 순 ascending sort
+// 튜플에 없는 놈만 넣기
 function solution(s) {
-  const arr = splitS(s);
+  const arr = convertToArray(s);
   arr.sort((a, b) => a.length - b.length);
-  const tuple = [];
-  arr.forEach((ak) => {
-    ak.forEach((el) => {
-      if (!tuple.includes(el)) tuple.push(el);
-    });
+  const tuple = new Set();
+  arr.forEach(ak => {
+    tuple.add(...ak.filter((el) => !tuple.has(el)));
   });
-  return tuple;
+  return Array.from(tuple);
 }
-
-
-// function splitS(s) {
-//   const result = [];
-//   let tmp = [];
-//   let isOpen = false;
-//   let num = 0;
-//   for (let i = 1; i < s.length - 1; i++) {
-//     // if {
-//     if (!isOpen && s[i] === "{") {
-//       isOpen = true;
-//       continue;
-//     }
-//     // 배열 열려있을 때
-//     if (isOpen) {
-//       // if 숫자
-//       if (!isNaN(s[i])) {
-//         num *= 10;
-//         num += Number(s[i]);
-//       }
-//       // if ,
-//       else if (s[i] === ",") {
-//         tmp.push(num);
-//         num = 0;
-//       }
-//       // if }
-//       else {
-//         tmp.push(num);
-//         num = 0;
-//         isOpen = false;
-//         result.push(tmp);
-//         tmp = [];
-//       }
-//     }
-//   }
-//   return result;
-// }

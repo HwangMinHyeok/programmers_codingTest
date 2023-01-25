@@ -1,25 +1,8 @@
 function solution(str1, str2) {
-  const obj1 = getMultiset(str1);
-  const obj2 = getMultiset(str2);
-  // if 둘 다 공집합; 분모(합집합의 개수):0 -> 자카드 유사도 1로 취급
-  if (Object.keys(obj1).length === 0 && Object.keys(obj2).length === 0) return 65536;
-  return Math.floor(getJaccardSimilarity(obj1, obj2) * 65536);
-}
-
-// 자카드 유사도
-function getJaccardSimilarity(obj1, obj2) {
-  let iCnt = 0;
-  let uCnt = 0;
-  const keys = new Set(Object.keys(obj1).concat(Object.keys(obj2)));
-  keys.forEach((key) => {
-    if (obj1[key] === undefined) uCnt += obj2[key];
-    else if (obj2[key] === undefined) uCnt += obj1[key];
-    else {
-      uCnt += Math.max(obj1[key], obj2[key]);
-      iCnt += Math.min(obj1[key], obj2[key]);
-    }
-  });
-  return iCnt / uCnt;
+  const multiset1 = getMultiset(str1);
+  const multiset2 = getMultiset(str2);
+  const jaccard = getJaccardSimilarity(multiset1, multiset2);
+  return Math.floor(jaccard * 65536);
 }
 
 // 2글자 단위 다중 집합
@@ -35,4 +18,22 @@ function getMultiset(str) {
     }
   }
   return multiset;
+}
+
+// 자카드 유사도
+function getJaccardSimilarity(multiset1, multiset2) {
+  // if 둘 다 공집합; 분모(합집합의 개수):0 -> 자카드 유사도 1로 취급
+  if (Object.keys(multiset1).length === 0 && Object.keys(multiset2).length === 0) return 1;
+  let iCnt = 0; // intersection Count
+  let uCnt = 0; // union Count
+  const keys = new Set([...Object.keys(multiset1), ...Object.keys(multiset2)]);
+  keys.forEach((key) => {
+    if (multiset1[key] === undefined) uCnt += multiset2[key];
+    else if (multiset2[key] === undefined) uCnt += multiset1[key];
+    else {
+      uCnt += Math.max(multiset1[key], multiset2[key]);
+      iCnt += Math.min(multiset1[key], multiset2[key]);
+    }
+  });
+  return iCnt / uCnt;
 }
